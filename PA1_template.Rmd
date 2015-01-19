@@ -1,25 +1,93 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
+title: "Rmarkdown for Assignement 1"
+author: "Aaron Nematnejad"
+date: "Sunday, January 18, 2015"
+output: html_document
 ---
+The first thing that we need to do for this assignement is to take the "activity.csv" file and save it in a folder on the desktop which takes the directory in the following form:  
+Desktop/Coursera/Reprod.
 
+Now we read the file into R.
 
-## Loading and preprocessing the data
-
-
-
-## What is mean total number of steps taken per day?
-
-
-
-## What is the average daily activity pattern?
-
-
-
-## Imputing missing values
+```{r}
+a<-read.csv("activity.csv",header= TRUE)
+b<-na.omit(a)
+print(head(b))
 
 
 
-## Are there differences in activity patterns between weekdays and weekends?
+```
+
+Now sum the number of steps on each interval
+```{r}
+d<-aggregate(steps~date, data=b, FUN=sum)
+
+```
+
+What is mean total number of steps taken per day?
+
+```{r, echo=FALSE}
+with(d, hist(d$steps, main="Number of Steps", col="red", ylab="Steps/day",  xlab = "Count"))
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+What is mean and median of the total number of steps taken per day?
+
+```{r}
+mean(d$steps)
+
+```
+and mendian number of steps:-
+
+```{r}
+median(d$steps)
+```
+
+Average Daily Activity Pattern
+
+```{r}
+e<-aggregate(steps~interval, data=b, FUN=mean)
+
+```
+
+
+
+plot of the data 
+
+
+```{r, echo=FALSE}
+plot(e$interval, e$steps, type ="l", xlab="5 min Interval", ylab="Avg Steps")
+
+```
+
+to get the interval with the max amount of steps, we first calculate the max number of steps:- 
+
+```{r}
+max(e$steps)
+
+```
+
+and the interval in which this is accomplished is:-
+
+```{r}
+subset(e$interval, e$steps==max(e$steps))
+
+```
+
+Calculating number of rows with missing values
+
+```{r}
+nrow(is.na(a))
+```
+
+Total Number of Rows 
+```{r}
+nrow((a))
+```
+
+Number of completed rows without NA
+
+is difference between 2 numbers.
