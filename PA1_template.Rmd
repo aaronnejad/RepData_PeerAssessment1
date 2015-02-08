@@ -83,7 +83,7 @@ Calculating number of rows with missing values
 nrow(is.na(a))
 ```
 
-Total Number of Rows 
+Total Number of Rows:  
 ```{r}
 nrow((a))
 ```
